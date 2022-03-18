@@ -15,6 +15,36 @@
         <h1>TODO list</h1>
     </div>
 
+    <div id="containerModal">
+        <div id="modal">
+            <button id="btnClose">X</button>
+
+            <header>        
+                <h1>Enter your task</h1>
+            </header>
+    
+            <main>
+                <div>
+                    <label for="inputModal">Task:</label>
+                    <input type="text" id="inputModal">
+                </div>
+                <div>
+                    <label for="creationDateModal">Creation Date:</label>
+                    <input type="date" id="creationDateModal">
+                </div>
+                <div>
+                    <label for="expirationDateModal">Expiration Date:</label>
+                    <input type="date" id="expirationDateModal">
+                </div>
+            </main>
+    
+            <footer>
+                <button id="btnAdd">Add</button>
+                <button id="btnCancel">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
