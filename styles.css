@@ -24,7 +24,17 @@ li {
     border: 1px dotted rgb(2, 2, 68);;
     list-style-type: none;
     background-color: white;
+    display: flex;
+    align-items: center;
 }
+
+li input {
+    height: 50px;
+    margin-left: 60px;
+    cursor: pointer;
+    transform: scale(2.0);
+}
+
 
 li div {
     background-color: white;
@@ -32,10 +42,15 @@ li div {
 
 li div:first-child {
     font-weight: 500;
-    color: rgb(2, 2, 68);
 }
 
-input {
+#done {
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#addedTask,
+#modal input {
     padding: 5px;
     border-radius: 5px;
     height: 20px;
@@ -45,7 +60,7 @@ input {
 
 #containerOfInput {
     display: flex;
-    align-items: baseline
+    align-items: baseline;
 }
 
 #btnPlus,
@@ -62,6 +77,10 @@ input {
     top: 2px; 
     left: 104%;
     font-weight: bold;
+}
+
+#containerModal {
+    display: none;
 }
 
 #modal {

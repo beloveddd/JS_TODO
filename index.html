@@ -13,38 +13,21 @@
 <body>
     <div class="container">
         <h1>TODO list</h1>
-    </div>
-
-    <div id="containerModal">
-        <div id="modal">
-            <button id="btnClose">X</button>
-
-            <header>        
-                <h1>Enter your task</h1>
-            </header>
-    
-            <main>
-                <div>
-                    <label for="inputModal">Task:</label>
-                    <input type="text" id="inputModal">
-                </div>
-                <div>
-                    <label for="creationDateModal">Creation Date:</label>
-                    <input type="date" id="creationDateModal">
-                </div>
-                <div>
-                    <label for="expirationDateModal">Expiration Date:</label>
-                    <input type="date" id="expirationDateModal">
-                </div>
-            </main>
-    
-            <footer>
-                <button id="btnAdd">Add</button>
-                <button id="btnCancel">Cancel</button>
-            </footer>
+        <ul></ul>
+        <label for="addedTask">Add your task below</label>
+        <div id="containerOfInput">
+            <input type="text" id="addedTask" placeholder="Your task">
+            <button id="btnPlus">+</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="containerModal"></div>
+
+    <script defer src="Modal.js"></script>
+    <script defer src="const.js"></script>
+    <script defer src="Task.js"></script>
+    <script defer src="functions.js"></script>
+    <script defer src="script.js"></script>
+
 </body>
 </html>
