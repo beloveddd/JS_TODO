@@ -1,8 +1,6 @@
 class Task {
     constructor(obj) {
-        this.taskName = obj.taskName;
-        this.dateCreation = obj.dateCreation;
-        this.dateExpiration = obj.dateExpiration;
+        Object.assign(this, obj);
     }
 
     getData() {
@@ -16,6 +14,5 @@ class Task {
             </div>
         `;
     }
-        
 }
 

@@ -1,5 +1,6 @@
-const containerModal = document.querySelector('#containerModal');
-const listOfTasks = document.querySelector('ul');
-const input = document.querySelector('#addedTask');
-const btnPlus = document.querySelector('#btnPlus');
-const modal = new Modal();
+const CONTAINER_MODAL = document.querySelector('#containerModal');
+const LIST_OF_TASKS = document.querySelector('ul');
+const INPUT = document.querySelector('#addedTask');
+const BTN_PLUS = document.querySelector('#btnPlus');
+const MODAL = new Modal();
+const ENTER_KEY_CODE = 'Enter';

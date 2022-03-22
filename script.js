@@ -1,9 +1,6 @@
-modal.renderModalView();
-input.addEventListener('keydown', addTaskToList);
-btnPlus.addEventListener('click', modal.openModalWindow);
-
-
-
+MODAL.renderModalView();
+INPUT.addEventListener('keydown', addTaskToList);
+BTN_PLUS.addEventListener('click', MODAL.openModalWindow);
 
 
 

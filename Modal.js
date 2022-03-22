@@ -1,11 +1,10 @@
 class Modal {
-
     valfromInput;
     valCreation;
     valExpiration;
     
     renderModalView() {
-        containerModal.innerHTML = `
+        CONTAINER_MODAL.innerHTML = `
         <div id="modal">
             <button id="btnClose">X</button>
         
@@ -34,69 +33,53 @@ class Modal {
             </footer>
         </div>
         `;
+        this.initVariables();
         this.initHandlers();
     }
 
-    initHandlers() {
-
+    initVariables() {
         const inputModal = document.querySelector('#inputModal');
         const creationDateModal = document.querySelector('#creationDateModal');
         const expirationDateModal = document.querySelector('#expirationDateModal');
-
         const btnClose = document.querySelector('#btnClose');
         const btnAdd = document.querySelector('#btnAdd');
         const btnCancel = document.querySelector('#btnCancel');
-        
+    }
+
+    initHandlers() {
         btnClose.addEventListener('click', this.closeModalWindow);
         btnCancel.addEventListener('click', this.closeModalWindow);
         btnAdd.addEventListener('click', this.saveValuesFromModal);
-
-        inputModal.addEventListener('blur', (e) => {
-            let ev = e.target; 
-            this.valfromInput = ev.value;
-        });
-
-        creationDateModal.addEventListener('blur', (e) => {
-            let ev = e.target; 
-            this.valCreation = ev.value;
-        });
-            
-        expirationDateModal.addEventListener('blur', (e) => {
-            let ev = e.target; 
-            this.valExpiration = ev.value;
-        });
+        inputModal.addEventListener('blur', getValueFromInput);
+        creationDateModal.addEventListener('blur', getValueForCreation);
+        expirationDateModal.addEventListener('blur', getValueForExpiration);
     }
 
     openModalWindow() {
-
         inputModal.value = '';
         creationDateModal.value = '';
         expirationDateModal.value = '';
-    
-        containerModal.style.display = 'block';
-        containerModal.classList = 'modal-overlay';
+        CONTAINER_MODAL.style.display = 'block';
+        CONTAINER_MODAL.classList = 'modal-overlay';
     }
     
     closeModalWindow() {
-        containerModal.style.display = 'none';
-        containerModal.classList.delete = 'modal-overlay';
+        CONTAINER_MODAL.style.display = 'none';
+        CONTAINER_MODAL.classList.delete = 'modal-overlay';
     }
 
     saveValuesFromModal() {
-    
-        let task = new Task ({
-            taskName: modal.valfromInput,
-            dateCreation: getDateCreation( new Date(modal.valCreation) ),
-            dateExpiration: getDateCreation( new Date(modal.valExpiration) ),
+        const task = new Task ({
+            taskName: MODAL.valfromInput,
+            dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
+            dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
         });
-    
-        let newLi = document.createElement('li');
-        newLi.innerHTML = task.getData();
-        listOfTasks.append(newLi);
+        const newLi = document.createElement('li');
 
-        modal.closeModalWindow();
+        newLi.innerHTML = task.getData();
+        LIST_OF_TASKS.append(newLi);
+        MODAL.closeModalWindow();
         setListenersToCheckbox();
     }
-
 }
 
