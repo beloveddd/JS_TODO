@@ -125,5 +125,9 @@ footer {
     background-color: transparent;
 }
 
+.canceled input {
+    border: 1px solid rgb(241, 65, 65);
+}
+
 
 

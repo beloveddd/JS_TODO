@@ -56,9 +56,7 @@ class Modal {
     }
 
     openModalWindow() {
-        inputModal.value = '';
-        creationDateModal.value = '';
-        expirationDateModal.value = '';
+        MODAL.clearValuesFromModal();
         CONTAINER_MODAL.style.display = 'block';
         CONTAINER_MODAL.classList = 'modal-overlay';
     }
@@ -69,17 +67,32 @@ class Modal {
     }
 
     saveValuesFromModal() {
-        const task = new Task ({
-            taskName: MODAL.valfromInput,
-            dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
-            dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
-        });
-        const newLi = document.createElement('li');
+        if (!MODAL.valfromInput || !MODAL.valCreation || !MODAL.valExpiration ) {
+            inputModal.classList.add = 'canceled';
+            return;
+        } else {
+            inputModal.classList.delete = 'canceled';
+            const task = new Task ({
+                taskName: MODAL.valfromInput,
+                dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
+                dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
+            });
+            const newLi = document.createElement('li');
 
-        newLi.innerHTML = task.getData();
-        LIST_OF_TASKS.append(newLi);
-        MODAL.closeModalWindow();
-        setListenersToCheckbox();
+            newLi.innerHTML = task.getData();
+            LIST_OF_TASKS.append(newLi);
+            MODAL.closeModalWindow();
+            setListenersToCheckbox();
+            MODAL.clearValuesFromModal()
+            }
     }
-}
 
+    clearValuesFromModal() {
+        this.valfromInput = '';
+        this.valCreation = '';
+        this.valExpiration = '';
+        inputModal.value = '';
+        creationDateModal.value = '';
+        expirationDateModal.value = '';
+    }
+ }
