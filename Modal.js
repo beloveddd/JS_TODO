@@ -1,4 +1,9 @@
-class Modal {
+import {CONTAINER_MODAL,LIST_OF_TASKS, MODAL, CLASS_FOR_MODAL} from "./const.js";
+import {getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask} from "./functions.js";
+import {Task} from "./Task.js";
+import {INPUT_MODAL, CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL, BTN_CLOSE, BTN_ADD, BTN_CANCEL} from './script.js';
+
+export class Modal {
     valfromInput;
     valCreation;
     valExpiration;
@@ -23,7 +28,7 @@ class Modal {
                 </div>
                 <div>
                     <label for="expirationDateModal">Expiration Date:</label>
-                    <input type="date" id="expirationDateModal">
+                    <input type="date" id="expirationDateModal" >
                 </div>
             </main>
         
@@ -33,66 +38,70 @@ class Modal {
             </footer>
         </div>
         `;
-        this.initVariables();
-        this.initHandlers();
-    }
-
-    initVariables() {
-        const inputModal = document.querySelector('#inputModal');
-        const creationDateModal = document.querySelector('#creationDateModal');
-        const expirationDateModal = document.querySelector('#expirationDateModal');
-        const btnClose = document.querySelector('#btnClose');
-        const btnAdd = document.querySelector('#btnAdd');
-        const btnCancel = document.querySelector('#btnCancel');
     }
 
     initHandlers() {
-        btnClose.addEventListener('click', this.closeModalWindow);
-        btnCancel.addEventListener('click', this.closeModalWindow);
-        btnAdd.addEventListener('click', this.saveValuesFromModal);
-        inputModal.addEventListener('blur', getValueFromInput);
-        creationDateModal.addEventListener('blur', getValueForCreation);
-        expirationDateModal.addEventListener('blur', getValueForExpiration);
+        BTN_CLOSE.addEventListener('click', this.closeModalWindow);
+        BTN_CANCEL.addEventListener('click', this.closeModalWindow);
+        BTN_ADD.addEventListener('click', this.checkDataValidity);
+        INPUT_MODAL.addEventListener('blur', getValueFromInput);
+        CREATION_DATE_MODAL.addEventListener('blur', getValueForCreation);
+        EXPIRATION_DATE_MODAL.addEventListener('blur', getValueForExpiration);
     }
 
     openModalWindow() {
         MODAL.clearValuesFromModal();
         CONTAINER_MODAL.style.display = 'block';
-        CONTAINER_MODAL.classList = 'modal-overlay';
+        CONTAINER_MODAL.classList = CLASS_FOR_MODAL;
     }
     
     closeModalWindow() {
         CONTAINER_MODAL.style.display = 'none';
-        CONTAINER_MODAL.classList.delete = 'modal-overlay';
+        CONTAINER_MODAL.classList.delete = CLASS_FOR_MODAL;
     }
 
     saveValuesFromModal() {
-        if (!MODAL.valfromInput || !MODAL.valCreation || !MODAL.valExpiration ) {
-            inputModal.classList.add = 'canceled';
-            return;
-        } else {
-            inputModal.classList.delete = 'canceled';
-            const task = new Task ({
-                taskName: MODAL.valfromInput,
-                dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
-                dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
-            });
-            const newLi = document.createElement('li');
+        const task = new Task ({
+            taskName: MODAL.valfromInput,
+            dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
+            dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
+        });
 
-            newLi.innerHTML = task.getData();
-            LIST_OF_TASKS.append(newLi);
-            MODAL.closeModalWindow();
-            setListenersToCheckbox();
-            MODAL.clearValuesFromModal()
-            }
+        renderTask(task);
+        MODAL.closeModalWindow();
+        MODAL.clearValuesFromModal();
     }
 
     clearValuesFromModal() {
         this.valfromInput = '';
         this.valCreation = '';
         this.valExpiration = '';
-        inputModal.value = '';
-        creationDateModal.value = '';
-        expirationDateModal.value = '';
+        INPUT_MODAL.value = '';
+        CREATION_DATE_MODAL.value = '';
+        EXPIRATION_DATE_MODAL.value = '';
     }
- }
+
+    checkDataValidity() {
+        if (!MODAL.valfromInput && !MODAL.valCreation && !MODAL.valExpiration) {
+            markAsInvalid(INPUT_MODAL, CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL);
+            return;
+        } else if (!MODAL.valCreation && !MODAL.valExpiration) {
+            markAsInvalid(CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL);
+            return;
+        } else if (!MODAL.valfromInput && !MODAL.valCreation) {
+            markAsInvalid(INPUT_MODAL, CREATION_DATE_MODAL);
+            return;
+        } else if (!MODAL.valfromInput && !MODAL.valExpiration) {
+            markAsInvalid(INPUT_MODAL, EXPIRATION_DATE_MODAL);
+            return;
+        } else if (!MODAL.valExpiration) {
+            markAsInvalid(EXPIRATION_DATE_MODAL);
+            return;
+        } else if (!MODAL.valfromInput) {
+            markAsInvalid(INPUT_MODAL);
+            return;
+        } else {
+            MODAL.saveValuesFromModal();  
+        }
+    }
+}

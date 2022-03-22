@@ -1,14 +1,9 @@
-class Task {
+export class Task {
     constructor(obj) {
         Object.assign(this, obj);
     }
 
     getData() {
-        // if (!this.taskName) {
-        //     inputModal.classList.add = 'canceled';
-        //     return;
-        // } else {
-        //     inputModal.classList.delete = 'canceled';
             return `
                 <div>
                     <div>Task: ${this.taskName}</div>
@@ -18,7 +13,6 @@ class Task {
                     <div><input class="checkbox" type="checkbox">
                 </div>
             `;
-        // }
     }
 }
 
