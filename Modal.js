@@ -1,6 +1,6 @@
-import {CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL} from "./const.js";
-import {getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask} from "./functions.js";
-import {Task} from "./Task.js";
+import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS } from "./const.js";
+import { getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask } from "./functions.js";
+import { Task } from "./Task.js";
 
 export class Modal {
     valfromInput;
@@ -57,12 +57,13 @@ export class Modal {
     }
 
     openModalWindow() {
-        MODAL.clearValuesFromModal();
+        MODAL.renderModalView();
         CONTAINER_MODAL.style.display = 'block';
         CONTAINER_MODAL.classList = CLASS_FOR_MODAL;
     }
     
     closeModalWindow() {
+        MODAL.clearValuesFromModal();
         CONTAINER_MODAL.style.display = 'none';
         CONTAINER_MODAL.classList.delete = CLASS_FOR_MODAL;
     }
@@ -89,14 +90,14 @@ export class Modal {
     }
 
     checkDataValidity() {
-        if (!MODAL.valfromInput) {
+        if (!inputModal.value) {
             markAsInvalid(inputModal);
-        } else if (!MODAL.valCreation || new Date(MODAL.valCreation) < new Date().setHours(0, 0, 0, 0) ) {
+        } else if (!creationDateModal.value || new Date(creationDateModal.value) < new Date().setHours(0, 0, 0, 0) ) {
             markAsInvalid(creationDateModal);
-        } else if (!MODAL.valExpiration || new Date(MODAL.Expiration) < new Date(MODAL.valCreation)) {
+        } else if (!expirationDateModal.value || new Date(expirationDateModal.value) < new Date(creationDateModal.value)) {
             markAsInvalid(expirationDateModal);
-        } else {
-            MODAL.saveValuesFromModal();  
         }
+
+        CONTAINER_MODAL.children[0].className === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
     }
 }

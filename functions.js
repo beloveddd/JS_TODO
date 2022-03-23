@@ -1,5 +1,5 @@
-import {LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES} from "./const.js";
-import {Task} from "./Task.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR } from "./const.js";
+import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
     if (e.key !== ENTER_KEY_CODE) {
@@ -9,6 +9,7 @@ export function addTaskToList(e) {
     const ev = e.target;
     const date = new Date(); 
     const task = new Task ({
+        taskId: new Date(),
         taskName: ev.value,
         dateCreation: getDateCreation(date),
         dateExpiration: getDateExpiration(date),
@@ -19,10 +20,18 @@ export function addTaskToList(e) {
 }
 
 export function getDateCreation(date) {
+    if (date.getMonth() < 9) {
+        return `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    }
+
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 }
 
 export function getDateExpiration(date) {
+    if (date.getMonth() < 9) {
+        return `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    }
+
     return `${date.getDate() + 1}.${date.getMonth() + 1}.${date.getFullYear()}`;
 }
 
@@ -39,6 +48,44 @@ export function defineTarget(e) {
 
             Task.deleteTask(liTask);
             break;
+        case BTN_CLASSES.CHANGE:
+            const taskLi = ev.parentNode.parentNode;
+
+            MODAL_EDITOR.chosenTask = taskLi;
+            changeTaskData(taskLi);
+    }
+}
+
+export function changeTaskData(taskLi) {
+    const taskName = taskLi.querySelector('#taskInp').outerText;
+    const dateCreation = taskLi.querySelector('#dateCreation').outerText;
+    const dateExpiration = taskLi.querySelector('#dateExpiration').outerText;
+    const objOfDataTask = {
+        taskName: taskName,
+        dateCreation: dateCreation,
+        dateExpiration: dateExpiration,
+    }
+    
+    MODAL_EDITOR.openModalEditorWindow(parseDataFromTask(objOfDataTask));
+};
+
+export function parseDataFromTask(objOfDataTask) {
+    const valueTaskName = objOfDataTask.taskName.split(' ')[1];
+    const valueCreationDate = objOfDataTask.dateCreation.split(' ')[2].split('.');
+    const valueExpirationDate = objOfDataTask.dateExpiration.split(' ')[2].split('.');
+
+    return {
+        taskName: valueTaskName,
+        dateCreation: {
+            year: valueCreationDate[2],
+            month: valueCreationDate[1],
+            date: valueCreationDate[0],
+        },
+        dateExpiration: {
+            year: valueExpirationDate[2],
+            month: valueExpirationDate[1],
+            date: valueExpirationDate[0],
+        }
     }
 }
 
@@ -116,6 +163,7 @@ export function renderTask(task) {
     newLi.innerHTML = task.getData();
     LIST_OF_TASKS.append(newLi);
 }
+
 
 
 
