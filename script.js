@@ -1,12 +1,7 @@
-const amountOfTasks = 4;
+import {INPUT, BTN_PLUS, MODAL, LIST_OF_TASKS} from "./const.js";
+import {addTaskToList, checkCheckbox} from "./functions.js";
 
-const container = document.querySelector('.container');
-const listOfTasks = document.createElement('ul');
-
-for (let i = 0; i < amountOfTasks; i++) {
-    let task = document.createElement('li');
-    task.innerHTML = `Task ${i+1}`;
-    listOfTasks.append(task);
-}
-
-container.append(listOfTasks);
+MODAL.renderModalView();
+INPUT.addEventListener('keydown', addTaskToList);
+BTN_PLUS.addEventListener('click', MODAL.openModalWindow);
+LIST_OF_TASKS.addEventListener('click', checkCheckbox);
