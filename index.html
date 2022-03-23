@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TO DO List</title>
+    <title>TODO List</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container"></div>
+    <div class="container">
+        <h1>TODO list</h1>
+        <ul></ul>
+        <label for="addedTask">Add your task below</label>
+        <div id="containerOfInput">
+            <input type="text" id="addedTask" placeholder="Your task">
+            <button id="btnPlus">+</button>
+        </div>
+    </div>
+
+    <div id="containerModal"></div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
