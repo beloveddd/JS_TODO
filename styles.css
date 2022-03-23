@@ -24,18 +24,42 @@ li {
     border: 1px dotted rgb(2, 2, 68);;
     list-style-type: none;
     background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+li input {
+    margin: 5px;
+    cursor: pointer;
+    transform: scale(2.0);
+    height: 80px;
 }
 
 li div {
+    padding: 0 5px;
     background-color: white;
 }
 
 li div:first-child {
+    background-color: white;
+    width: 14rem;
+
     font-weight: 500;
-    color: rgb(2, 2, 68);
 }
 
-input {
+ul li div:first-child div#done {
+    color: rgba(28, 148, 28, 0.884);
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.done {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#addedTask,
+#modal input {
     padding: 5px;
     border-radius: 5px;
     height: 20px;
@@ -45,7 +69,7 @@ input {
 
 #containerOfInput {
     display: flex;
-    align-items: baseline
+    align-items: baseline;
 }
 
 #btnPlus,
@@ -62,6 +86,10 @@ input {
     top: 2px; 
     left: 104%;
     font-weight: bold;
+}
+
+#containerModal {
+    display: none;
 }
 
 #modal {
@@ -105,6 +133,11 @@ footer {
     cursor: pointer;
     background-color: transparent;
 }
+
+.canceled {
+    outline: 1px solid rgb(241, 65, 65);
+}
+
 
 
 
