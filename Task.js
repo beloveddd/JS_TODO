@@ -12,9 +12,16 @@ export class Task {
                             <div>Expiration Date: ${this.dateExpiration}</div>
                         </div>
                     </div>
-                    <div><input class="checkbox" type="checkbox"></div>
+                    <div>
+                        <input class="checkbox" type="checkbox">
+                        <button class="crossrow">X</button>
+                    </div>
                 </div>
             `;
+    }
+
+    static deleteTask(task) {
+        task.remove();
     }
 }
 

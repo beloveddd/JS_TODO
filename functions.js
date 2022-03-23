@@ -1,4 +1,4 @@
-import {LIST_OF_TASKS, ENTER_KEY_CODE, MODAL} from "./const.js";
+import {LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES} from "./const.js";
 import {Task} from "./Task.js";
 
 export function addTaskToList(e) {
@@ -26,13 +26,23 @@ export function getDateExpiration(date) {
     return `${date.getDate() + 1}.${date.getMonth() + 1}.${date.getFullYear()}`;
 }
 
-export function checkCheckbox(e) {
+export function defineTarget(e) {
     const ev = e.target;
+    const targetClass = ev.className;
 
-    if (ev.className !== 'checkbox') {
-        return;
+    switch (targetClass) {
+        case BTN_CLASSES.CHECKBOX:
+            checkCheckbox(ev);
+            break;
+        case BTN_CLASSES.CROSSROW:
+            const liTask = ev.parentNode.parentNode;
+
+            Task.deleteTask(liTask);
+            break;
     }
+}
 
+export function checkCheckbox(ev) {
     const divTask = ev.parentNode.parentNode.children[0].children[0];
     
     if (ev.checked) {
