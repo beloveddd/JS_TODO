@@ -26,13 +26,14 @@ li {
     background-color: white;
     display: flex;
     align-items: center;
+    min-height: 80px;
 }
 
 li input {
     margin: 5px;
     cursor: pointer;
     transform: scale(2.0);
-    height: 80px;
+
 }
 
 li div {
@@ -136,6 +137,19 @@ footer {
 
 .canceled {
     outline: 1px solid rgb(241, 65, 65);
+}
+
+.crossrow {
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    padding-bottom: 5px;
+    font-weight: 600;
+    color: rgb(2, 2, 68);
+    background-color: transparent;
+    position: relative;
+    top: -33px; 
+    left: 52%;
 }
 
 

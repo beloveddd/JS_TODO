@@ -26,20 +26,26 @@ export function getDateExpiration(date) {
     return `${date.getDate() + 1}.${date.getMonth() + 1}.${date.getFullYear()}`;
 }
 
-export function checkCheckbox(e) {
+export function defineTarget(e) {
     const ev = e.target;
 
-    if (ev.className !== 'checkbox') {
-        return;
-    }
+    if (ev.className == 'checkbox') {
+        checkCheckbox(ev);
+    } else if (ev.className == 'crossrow') {
+        const liTask = ev.parentNode.parentNode;
 
+        Task.deleteTask(liTask);
+    }
+}
+
+export function checkCheckbox(ev) {
     const divTask = ev.parentNode.parentNode.children[0].children[0];
     
-    if (ev.checked) {
-        setTaskAsDone(divTask);
-    } else {
-        cancelTaskAsDone(divTask);
-    }
+        if (ev.checked) {
+            setTaskAsDone(divTask);
+        } else {
+            cancelTaskAsDone(divTask);
+        }
 }
 
 export function setTaskAsDone(divTask) {
