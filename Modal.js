@@ -1,7 +1,6 @@
-import {CONTAINER_MODAL,LIST_OF_TASKS, MODAL, CLASS_FOR_MODAL} from "./const.js";
+import {CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL} from "./const.js";
 import {getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask} from "./functions.js";
 import {Task} from "./Task.js";
-import {INPUT_MODAL, CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL, BTN_CLOSE, BTN_ADD, BTN_CANCEL} from './script.js';
 
 export class Modal {
     valfromInput;
@@ -38,15 +37,23 @@ export class Modal {
             </footer>
         </div>
         `;
+        this.initHandlers();
     }
 
     initHandlers() {
-        BTN_CLOSE.addEventListener('click', this.closeModalWindow);
-        BTN_CANCEL.addEventListener('click', this.closeModalWindow);
-        BTN_ADD.addEventListener('click', this.checkDataValidity);
-        INPUT_MODAL.addEventListener('blur', getValueFromInput);
-        CREATION_DATE_MODAL.addEventListener('blur', getValueForCreation);
-        EXPIRATION_DATE_MODAL.addEventListener('blur', getValueForExpiration);
+        const inputModal = document.querySelector('#inputModal');
+        const creationDateModal = document.querySelector('#creationDateModal');
+        const expirationDateModal = document.querySelector('#expirationDateModal');
+        const btnClose = document.querySelector('#btnClose');
+        const btnAdd = document.querySelector('#btnAdd');
+        const btnCancel = document.querySelector('#btnCancel');
+
+        btnClose.addEventListener('click', this.closeModalWindow);
+        btnCancel.addEventListener('click', this.closeModalWindow);
+        btnAdd.addEventListener('click', this.checkDataValidity);
+        inputModal.addEventListener('blur', getValueFromInput);
+        creationDateModal.addEventListener('blur', getValueForCreation);
+        expirationDateModal.addEventListener('blur', getValueForExpiration);
     }
 
     openModalWindow() {
@@ -76,32 +83,35 @@ export class Modal {
         this.valfromInput = '';
         this.valCreation = '';
         this.valExpiration = '';
-        INPUT_MODAL.value = '';
-        CREATION_DATE_MODAL.value = '';
-        EXPIRATION_DATE_MODAL.value = '';
+        inputModal.value = '';
+        creationDateModal.value = '';
+        expirationDateModal.value = '';
     }
 
     checkDataValidity() {
         if (!MODAL.valfromInput && !MODAL.valCreation && !MODAL.valExpiration) {
-            markAsInvalid(INPUT_MODAL, CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL);
+            markAsInvalid(inputModal, creationDateModal, expirationDateModal);
             return;
         } else if (!MODAL.valCreation && !MODAL.valExpiration) {
-            markAsInvalid(CREATION_DATE_MODAL, EXPIRATION_DATE_MODAL);
+            markAsInvalid(creationDateModal, expirationDateModal);
             return;
         } else if (!MODAL.valfromInput && !MODAL.valCreation) {
-            markAsInvalid(INPUT_MODAL, CREATION_DATE_MODAL);
+            markAsInvalid(inputModal, creationDateModal);
             return;
         } else if (!MODAL.valfromInput && !MODAL.valExpiration) {
-            markAsInvalid(INPUT_MODAL, EXPIRATION_DATE_MODAL);
+            markAsInvalid(inputModal, expirationDateModal);
             return;
         } else if (!MODAL.valExpiration) {
-            markAsInvalid(EXPIRATION_DATE_MODAL);
+            markAsInvalid(expirationDateModal);
             return;
         } else if (!MODAL.valfromInput) {
-            markAsInvalid(INPUT_MODAL);
+            markAsInvalid(inputModal);
             return;
-        } else {
-            MODAL.saveValuesFromModal();  
+        } else if (!MODAL.valCreation) {
+            markAsInvalid(creationDateModal);
+            return;
         }
+
+        MODAL.saveValuesFromModal();  
     }
 }

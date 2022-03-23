@@ -13,9 +13,9 @@ export function addTaskToList(e) {
         dateCreation: getDateCreation(date),
         dateExpiration: getDateExpiration(date),
     });
+
     ev.value = '';
-    renderTask(task);
-    
+    renderTask(task);   
 }
 
 export function getDateCreation(date) {
@@ -33,31 +33,29 @@ export function checkCheckbox(e) {
         return;
     }
 
-    const liTask = ev.parentNode.parentNode;
+    const divTask = ev.parentNode.parentNode.children[0].children[0];
     
     if (ev.checked) {
-        setTaskAsDone(liTask);
+        setTaskAsDone(divTask);
     } else {
-        cancelTaskAsDone(liTask);
+        cancelTaskAsDone(divTask);
     }
 }
 
-export function setTaskAsDone(liTask) {
+export function setTaskAsDone(divTask) {
     const markDone = document.createElement('div');
 
     markDone.id = "done";
     markDone.innerHTML = "DONE";
-    liTask.style.textDecoration = 'line-through';
-    liTask.style.color = 'rgba(0, 0, 0, 0.5)';
-    liTask.children[0].append(markDone);
+    divTask.classList.add("done");
+    divTask.parentNode.append(markDone);
 }
 
-export function cancelTaskAsDone(liTask) {
-    const markDone = liTask.querySelector('#done');
+export function cancelTaskAsDone(divTask) {
+    const markDone = divTask.parentNode.querySelector('#done');
 
     markDone.remove();
-    liTask.style.textDecoration = 'none';
-    liTask.style.color = 'rgba(0, 0, 0, 1)'; 
+    divTask.classList.remove("done");
 }
 
 export function getValueFromInput(e) {
@@ -78,7 +76,6 @@ export function getValueForCreation(e) {
     if (MODAL.valCreation) {
         markAsValid(ev);
     }
-
 }
 
 export function getValueForExpiration(e) {
