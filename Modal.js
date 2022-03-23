@@ -89,29 +89,14 @@ export class Modal {
     }
 
     checkDataValidity() {
-        if (!MODAL.valfromInput && !MODAL.valCreation && !MODAL.valExpiration) {
-            markAsInvalid(inputModal, creationDateModal, expirationDateModal);
-            return;
-        } else if (!MODAL.valCreation && !MODAL.valExpiration) {
-            markAsInvalid(creationDateModal, expirationDateModal);
-            return;
-        } else if (!MODAL.valfromInput && !MODAL.valCreation) {
-            markAsInvalid(inputModal, creationDateModal);
-            return;
-        } else if (!MODAL.valfromInput && !MODAL.valExpiration) {
-            markAsInvalid(inputModal, expirationDateModal);
-            return;
-        } else if (!MODAL.valExpiration) {
-            markAsInvalid(expirationDateModal);
-            return;
-        } else if (!MODAL.valfromInput) {
+        if (!MODAL.valfromInput) {
             markAsInvalid(inputModal);
-            return;
-        } else if (!MODAL.valCreation) {
+        } else if (!MODAL.valCreation || new Date(MODAL.valCreation) < new Date().setHours(0, 0, 0, 0) ) {
             markAsInvalid(creationDateModal);
-            return;
+        } else if (!MODAL.valExpiration || new Date(MODAL.Expiration) < new Date(MODAL.valCreation)) {
+            markAsInvalid(expirationDateModal);
+        } else {
+            MODAL.saveValuesFromModal();  
         }
-
-        MODAL.saveValuesFromModal();  
     }
 }

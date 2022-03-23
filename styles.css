@@ -29,17 +29,21 @@ li {
 }
 
 li input {
-    margin-left: -52px;
+    margin: 5px;
     cursor: pointer;
     transform: scale(2.0);
     height: 80px;
 }
 
-
 li div {
-    background-color: white;
-    width: 18rem;
     padding: 0 5px;
+    background-color: white;
+}
+
+li div:first-child {
+    background-color: white;
+    width: 14rem;
+
     font-weight: 500;
 }
 
@@ -133,6 +137,7 @@ footer {
 .canceled {
     outline: 1px solid rgb(241, 65, 65);
 }
+
 
 
 
