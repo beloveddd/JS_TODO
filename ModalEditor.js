@@ -1,5 +1,5 @@
-import { MODAL_EDITOR, CONTAINER_MODAL,CLASS_FOR_MODAL } from './const.js';
-import { getDateCreation } from "./functions.js";
+import { MODAL_EDITOR, CONTAINER_MODAL,CLASS_FOR_MODAL, TASKS_OBJ } from './const.js';
+import { getDateCreation, renderEdittedTask } from "./functions.js";
 import { Modal } from './Modal.js';
 
 export class ModalEditor extends Modal {
@@ -51,13 +51,12 @@ export class ModalEditor extends Modal {
     }
 
     saveValuesFromModalEditor() {
-        const taskInput = MODAL_EDITOR.chosenTask.querySelector('#taskInp');
-        const creationDateInput = MODAL_EDITOR.chosenTask.querySelector('#dateCreation');
-        const expirationDateInput = MODAL_EDITOR.chosenTask.querySelector('#dateExpiration');
-
-        taskInput.innerHTML = `Task: ${inputModal.value}`;
-        creationDateInput.innerHTML = `Creation Date: ${getDateCreation(new Date (creationDateModal.value))}`;
-        expirationDateInput.innerHTML = `Expiraton Date: ${getDateCreation(new Date (expirationDateModal.value))}`;
+        const targetTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +MODAL_EDITOR.chosenTask.firstElementChild.id ); 
+        
+        targetTask.taskName = inputModal.value;
+        targetTask.dateCreation = getDateCreation( new Date(creationDateModal.value) );
+        targetTask.dateExpiration = getDateCreation( new Date(expirationDateModal.value) );
+        renderEdittedTask(targetTask);
         MODAL_EDITOR.closeModalEditorWindow();
     }
 }

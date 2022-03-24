@@ -1,4 +1,4 @@
-import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS } from "./const.js";
+import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS, TASKS_OBJ } from "./const.js";
 import { getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask } from "./functions.js";
 import { Task } from "./Task.js";
 
@@ -70,12 +70,15 @@ export class Modal {
     }
 
     saveValuesFromModal() {
+        const taskId = Date.now();
         const task = new Task ({
+            taskId: taskId,
             taskName: MODAL.valfromInput,
             dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
             dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
         });
 
+        TASKS_OBJ[taskId] = task;
         renderTask(task);
         MODAL.closeModalWindow();
         MODAL.clearValuesFromModal();

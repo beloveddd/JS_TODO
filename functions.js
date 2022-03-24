@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -7,29 +7,39 @@ export function addTaskToList(e) {
     }
 
     const ev = e.target;
-    const date = new Date(); 
+    const date = new Date();
+    const taskId = Date.now();
     const task = new Task ({
-        taskId: new Date(),
+        isChecked: false,
+        taskId: taskId,
         taskName: ev.value,
         dateCreation: getDateCreation(date),
         dateExpiration: getDateExpiration(date),
     });
 
+    TASKS_OBJ[taskId] = task;
     ev.value = '';
     renderTask(task);   
 }
 
 export function getDateCreation(date) {
-    if (date.getMonth() < 10) {
-        return `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
-    }
+    const dataFormatTo10 = `0${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    const monthFormatTo10 = `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
 
+    if (date.getMonth() < 10) {
+        return (date.getDate() < 10) ? dataFormatTo10 : monthFormatTo10;
+    }
+        
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+
 }
 
 export function getDateExpiration(date) {
+    const dataFormatTo10 = `0${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    const monthFormatTo10 = `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    
     if (date.getMonth() < 10) {
-        return `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+        return (date.getDate() < 10) ? dataFormatTo10 : monthFormatTo10;
     }
 
     return `${date.getDate() + 1}.${date.getMonth() + 1}.${date.getFullYear()}`;
@@ -93,28 +103,33 @@ export function parseDataFromTask(objOfDataTask) {
 
 export function checkCheckbox(ev) {
     const divTask = ev.parentNode.parentNode.children[0].children[0];
-    
+    const taskId = ev.parentNode.parentNode.firstElementChild.id;
+
     if (ev.checked) {
-        setTaskAsDone(divTask);
+        setTaskAsDone(divTask, taskId);
     } else {
-        cancelTaskAsDone(divTask);
+        cancelTaskAsDone(divTask, taskId);
     }
 }
 
-export function setTaskAsDone(divTask) {
+export function setTaskAsDone(divTask, taskId) {
     const markDone = document.createElement('div');
+    const clickedTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +taskId);
 
     markDone.id = DONE_TASK_ID_CLASS;
     markDone.innerHTML = DONE_TASK_ID_CLASS.toUpperCase();
     divTask.classList.add(DONE_TASK_ID_CLASS);
     divTask.parentNode.append(markDone);
+    clickedTask.isChecked = true;
 }
 
-export function cancelTaskAsDone(divTask) {
-    const markDone = divTask.parentNode.querySelector('#done');
+export function cancelTaskAsDone(divTask, taskId) {
+    const markDone = divTask.parentNode.querySelector(`#${DONE_TASK_ID_CLASS}`);
+    const clickedTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +taskId);
 
     markDone.remove();
     divTask.classList.remove(DONE_TASK_ID_CLASS);
+    clickedTask.isChecked = false;
 }
 
 export function getValueFromInput(e) {
@@ -162,7 +177,52 @@ export function renderTask(task) {
     LIST_OF_TASKS.append(newLi);
 }
 
+export function renderEdittedTask(task) {
+    document.getElementById(task.taskId).parentNode.innerHTML = task.getData();
+}
 
+export function showAllTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+       const task = document.getElementById(elem.taskId);
 
+       setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
+    });
+}
 
+export function showActiveTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
 
+        if (elem.isChecked) {
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.NONE);
+        } else {
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
+        }
+    });
+}
+
+export function showCompletedTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
+
+        if (elem.isChecked) {
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
+        } else {
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.NONE);
+        }
+    });
+}
+
+export function clearCompletedTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
+
+        if (elem.isChecked) {
+            Task.deleteTask(task.parentNode, elem.taskId);
+        }
+    });
+}
+
+export function setTaskDispayProperty(task, property) {
+    task.parentNode.style.display = property;    
+}

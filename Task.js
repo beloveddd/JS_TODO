@@ -1,3 +1,5 @@
+import { TASKS_OBJ } from "./const.js";
+
 export class Task {
     constructor(obj) {
         Object.assign(this, obj);
@@ -5,7 +7,7 @@ export class Task {
 
     getData() {
             return `
-                <div>
+                <div id=${this.taskId}>
                     <div>
                         <div id="taskInp">Task: ${this.taskName}</div>
                             <div id="dateCreation">Creation Date: ${this.dateCreation}</div>
@@ -21,8 +23,8 @@ export class Task {
             `;
     }
 
-    static deleteTask(task) {
+    static deleteTask(task, taskId) {
         task.remove();
+        delete TASKS_OBJ[taskId];
     }
 }
-

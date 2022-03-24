@@ -71,7 +71,7 @@ ul li div:first-child div#done {
     align-items: baseline;
 }
 
-#btnPlus,
+.btnPlus,
 #btnClose {
     border: none;
     font-size: 30px;
@@ -123,8 +123,8 @@ footer {
 }
 
 #btnAdd,
-#btnCancel {
-    background-color: transparent;
+#btnCancel,
+.btnsForTasks button {
     border-radius: 5px;
     font-size: 16px;
     font-weight: 500;
@@ -161,6 +161,17 @@ footer {
 
 .taskBtns {
     display: flex;
+}
+
+.btnsForTasks {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.btnsForTasks button {
+    font-size: 14px;
+    background-color: white;
 }
 
 
