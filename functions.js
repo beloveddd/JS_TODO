@@ -23,16 +23,23 @@ export function addTaskToList(e) {
 }
 
 export function getDateCreation(date) {
-    if (date.getMonth() < 10) {
-        return `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
-    }
+    const dataFormatTo10 = `0${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    const monthFormatTo10 = `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
 
+    if (date.getMonth() < 10) {
+        return (date.getDate() < 10) ? dataFormatTo10 : monthFormatTo10;
+    }
+        
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+
 }
 
 export function getDateExpiration(date) {
+    const dataFormatTo10 = `0${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    const monthFormatTo10 = `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+    
     if (date.getMonth() < 10) {
-        return `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
+        return (date.getDate() < 10) ? dataFormatTo10 : monthFormatTo10;
     }
 
     return `${date.getDate() + 1}.${date.getMonth() + 1}.${date.getFullYear()}`;
