@@ -96,8 +96,8 @@ export class Modal {
             markAsInvalid(creationDateModal);
         } else if (!expirationDateModal.value || new Date(expirationDateModal.value) < new Date(creationDateModal.value)) {
             markAsInvalid(expirationDateModal);
+        } else {
+            CONTAINER_MODAL.children[0].className === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
         }
-
-        CONTAINER_MODAL.children[0].className === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
     }
 }

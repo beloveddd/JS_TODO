@@ -16,3 +16,5 @@ export const BTN_CLASSES = {
 }
 export const BTN_PLUS = document.querySelector(`#${BTN_CLASSES.PLUS}`);
 export const MODAL_EDITOR_CLASS = 'editor';
+export const INVALID_DATA_CLASS = 'canceled';
+export const DONE_TASK_ID_CLASS = 'done';

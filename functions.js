@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -20,7 +20,7 @@ export function addTaskToList(e) {
 }
 
 export function getDateCreation(date) {
-    if (date.getMonth() < 9) {
+    if (date.getMonth() < 10) {
         return `${date.getDate()}.0${date.getMonth() + 1}.${date.getFullYear()}`;
     }
 
@@ -28,7 +28,7 @@ export function getDateCreation(date) {
 }
 
 export function getDateExpiration(date) {
-    if (date.getMonth() < 9) {
+    if (date.getMonth() < 10) {
         return `${date.getDate() + 1}.0${date.getMonth() + 1}.${date.getFullYear()}`;
     }
 
@@ -53,6 +53,7 @@ export function defineTarget(e) {
 
             MODAL_EDITOR.chosenTask = taskLi;
             changeTaskData(taskLi);
+            break;
     }
 }
 
@@ -102,9 +103,9 @@ export function checkCheckbox(ev) {
 export function setTaskAsDone(divTask) {
     const markDone = document.createElement('div');
 
-    markDone.id = "done";
-    markDone.innerHTML = "DONE";
-    divTask.classList.add("done");
+    markDone.id = DONE_TASK_ID_CLASS;
+    markDone.innerHTML = DONE_TASK_ID_CLASS.toUpperCase();
+    divTask.classList.add(DONE_TASK_ID_CLASS);
     divTask.parentNode.append(markDone);
 }
 
@@ -112,7 +113,7 @@ export function cancelTaskAsDone(divTask) {
     const markDone = divTask.parentNode.querySelector('#done');
 
     markDone.remove();
-    divTask.classList.remove("done");
+    divTask.classList.remove(DONE_TASK_ID_CLASS);
 }
 
 export function getValueFromInput(e) {
@@ -143,18 +144,14 @@ export function getValueForExpiration(e) {
     if (MODAL.valExpiration) {
         markAsValid(ev);
     }
-
-    if (new Date(MODAL.valExpiration) < new Date(MODAL.valCreation)) {
-        markAsInvalid(ev); 
-    }
 }
 
 export function markAsInvalid() {
-    Array.from(arguments).forEach( (elem) => elem.classList.add('canceled') );
+    Array.from(arguments).forEach( (elem) => elem.classList.add(INVALID_DATA_CLASS) );
 }
 
 export function markAsValid(input) {
-    input.classList.remove('canceled'); 
+    input.classList.remove(INVALID_DATA_CLASS); 
 }
 
 export function renderTask(task) {
