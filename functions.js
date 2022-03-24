@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -7,14 +7,17 @@ export function addTaskToList(e) {
     }
 
     const ev = e.target;
-    const date = new Date(); 
+    const date = new Date();
+    const taskId = Date.now();
     const task = new Task ({
-        taskId: new Date(),
+        isChecked: false,
+        taskId: taskId,
         taskName: ev.value,
         dateCreation: getDateCreation(date),
         dateExpiration: getDateExpiration(date),
     });
 
+    TASKS_OBJ[taskId] = task;
     ev.value = '';
     renderTask(task);   
 }
@@ -39,16 +42,17 @@ export function defineTarget(e) {
     const ev = e.target;
     const targetClass = ev.className;
 
-    switch (targetClass) {
-        case BTN_CLASSES.CHECKBOX:
+    switch (true) {
+        case targetClass.includes(BTN_CLASSES.CHECKBOX):
             checkCheckbox(ev);
             break;
-        case BTN_CLASSES.CROSSROW:
+        case targetClass.includes(BTN_CLASSES.CROSSROW):
             const liTask = ev.parentNode.parentNode;
+            const taskId = liTask.firstElementChild.id;
 
-            Task.deleteTask(liTask);
+            Task.deleteTask(liTask, taskId);
             break;
-        case BTN_CLASSES.CHANGE:
+        case targetClass.includes(BTN_CLASSES.CHANGE):
             const taskLi = ev.parentNode.parentNode;
 
             MODAL_EDITOR.chosenTask = taskLi;
@@ -92,28 +96,33 @@ export function parseDataFromTask(objOfDataTask) {
 
 export function checkCheckbox(ev) {
     const divTask = ev.parentNode.parentNode.children[0].children[0];
-    
+    const taskId = ev.parentNode.parentNode.firstElementChild.id;
+
     if (ev.checked) {
-        setTaskAsDone(divTask);
+        setTaskAsDone(divTask, taskId);
     } else {
-        cancelTaskAsDone(divTask);
+        cancelTaskAsDone(divTask, taskId);
     }
 }
 
-export function setTaskAsDone(divTask) {
+export function setTaskAsDone(divTask, taskId) {
     const markDone = document.createElement('div');
+    const clickedTask = Object.values(TASKS_OBJ).filter( (elem) => elem.taskId === +taskId)[0];
 
     markDone.id = DONE_TASK_ID_CLASS;
     markDone.innerHTML = DONE_TASK_ID_CLASS.toUpperCase();
     divTask.classList.add(DONE_TASK_ID_CLASS);
     divTask.parentNode.append(markDone);
+    clickedTask.isChecked = true;
 }
 
-export function cancelTaskAsDone(divTask) {
+export function cancelTaskAsDone(divTask, taskId) {
     const markDone = divTask.parentNode.querySelector('#done');
+    const clickedTask = Object.values(TASKS_OBJ).filter( (elem) => elem.taskId === +taskId)[0];
 
     markDone.remove();
     divTask.classList.remove(DONE_TASK_ID_CLASS);
+    clickedTask.isChecked = false;
 }
 
 export function getValueFromInput(e) {
@@ -161,7 +170,48 @@ export function renderTask(task) {
     LIST_OF_TASKS.append(newLi);
 }
 
+export function renderEdittedTask(task) {
+    document.getElementById(task.taskId).parentNode.innerHTML = task.getData();
+}
 
+export function showAllTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+       const task = document.getElementById(elem.taskId);
 
+       task.parentNode.style.display = 'flex';
+    });
+}
 
+export function showActiveTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
 
+        if (elem.isChecked) {
+            task.parentNode.style.display = 'none';    
+        } else {
+            task.parentNode.style.display = 'flex';
+        }
+    });
+}
+
+export function showCompletedTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
+
+        if (elem.isChecked) {
+            task.parentNode.style.display = 'flex';    
+        } else {
+            task.parentNode.style.display = 'none';
+        }
+    });
+}
+
+export function clearCompletedTasks() {
+    Object.values(TASKS_OBJ).forEach( (elem) => {
+        const task = document.getElementById(elem.taskId);
+
+        if (elem.isChecked) {
+            Task.deleteTask(task.parentNode, elem.taskId);
+        }
+    });
+}
