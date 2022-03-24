@@ -7,14 +7,15 @@ export class Task {
             return `
                 <div>
                     <div>
-                        <div>Task: ${this.taskName}</div>
-                            <div>Creation Date: ${this.dateCreation}</div>
-                            <div>Expiration Date: ${this.dateExpiration}</div>
+                        <div id="taskInp">Task: ${this.taskName}</div>
+                            <div id="dateCreation">Creation Date: ${this.dateCreation}</div>
+                            <div id="dateExpiration">Expiration Date: ${this.dateExpiration}</div>
                         </div>
                     </div>
-                    <div>
+                    <div class="taskBtns">
                         <input class="checkbox" type="checkbox">
                         <button class="crossrow">X</button>
+                        <i class="fa-solid fa-pencil change"></i>
                     </div>
                 </div>
             `;

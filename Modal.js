@@ -1,6 +1,6 @@
-import {CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL} from "./const.js";
-import {getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask} from "./functions.js";
-import {Task} from "./Task.js";
+import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS } from "./const.js";
+import { getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask } from "./functions.js";
+import { Task } from "./Task.js";
 
 export class Modal {
     valfromInput;
@@ -37,6 +37,7 @@ export class Modal {
             </footer>
         </div>
         `;
+
         this.initHandlers();
     }
 
@@ -57,12 +58,13 @@ export class Modal {
     }
 
     openModalWindow() {
-        MODAL.clearValuesFromModal();
+        MODAL.renderModalView();
         CONTAINER_MODAL.style.display = 'block';
         CONTAINER_MODAL.classList = CLASS_FOR_MODAL;
     }
     
     closeModalWindow() {
+        MODAL.clearValuesFromModal();
         CONTAINER_MODAL.style.display = 'none';
         CONTAINER_MODAL.classList.delete = CLASS_FOR_MODAL;
     }
@@ -89,14 +91,22 @@ export class Modal {
     }
 
     checkDataValidity() {
-        if (!MODAL.valfromInput) {
+        const valInp = inputModal.value;
+        const valDateCreation = creationDateModal.value;
+        const valDateExpiration = expirationDateModal.value;
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const dateCreation = new Date(valDateCreation);
+        const dateExpiration = new Date(valDateExpiration);
+        const modalClass = CONTAINER_MODAL.firstElementChild.className;
+
+        if (!valInp) {
             markAsInvalid(inputModal);
-        } else if (!MODAL.valCreation || new Date(MODAL.valCreation) < new Date().setHours(0, 0, 0, 0) ) {
+        } else if (!valDateCreation || dateCreation < currentDate ) {
             markAsInvalid(creationDateModal);
-        } else if (!MODAL.valExpiration || new Date(MODAL.Expiration) < new Date(MODAL.valCreation)) {
+        } else if (!valDateExpiration || dateExpiration < dateCreation) {
             markAsInvalid(expirationDateModal);
         } else {
-            MODAL.saveValuesFromModal();  
+            modalClass === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
         }
     }
 }

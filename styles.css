@@ -31,9 +31,8 @@ li {
 
 li input {
     margin: 5px;
-    cursor: pointer;
     transform: scale(2.0);
-
+    cursor: pointer;
 }
 
 li div {
@@ -44,7 +43,6 @@ li div {
 li div:first-child {
     background-color: white;
     width: 14rem;
-
     font-weight: 500;
 }
 
@@ -142,7 +140,6 @@ footer {
 .crossrow {
     border: none;
     font-size: 15px;
-    cursor: pointer;
     padding-bottom: 5px;
     font-weight: 600;
     color: rgb(2, 2, 68);
@@ -150,6 +147,20 @@ footer {
     position: relative;
     top: -33px; 
     left: 52%;
+    cursor: pointer;
+}
+
+.fa-solid {
+    position: relative;
+    top: -32px; 
+    left: -4%;
+    transform: scale(0.7);
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.taskBtns {
+    display: flex;
 }
 
 

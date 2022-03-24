@@ -1,9 +1,11 @@
-import {Modal} from './Modal.js';
+import { Modal } from './Modal.js';
+import { ModalEditor } from './ModalEditor.js';
 
 export const CONTAINER_MODAL = document.querySelector('#containerModal');
 export const LIST_OF_TASKS = document.querySelector('ul');
 export const INPUT = document.querySelector('#addedTask');
 export const MODAL = new Modal();
+export const MODAL_EDITOR = new ModalEditor();
 export const ENTER_KEY_CODE = 'Enter';
 export const CLASS_FOR_MODAL = 'modal-overlay';
 export const BTN_CLASSES = {
@@ -13,3 +15,6 @@ export const BTN_CLASSES = {
     PLUS: 'btnPlus',
 }
 export const BTN_PLUS = document.querySelector(`#${BTN_CLASSES.PLUS}`);
+export const MODAL_EDITOR_CLASS = 'editor';
+export const INVALID_DATA_CLASS = 'canceled';
+export const DONE_TASK_ID_CLASS = 'done';
