@@ -185,7 +185,7 @@ export function showAllTasks() {
     Object.values(TASKS_OBJ).forEach( (elem) => {
        const task = document.getElementById(elem.taskId);
 
-       Task(task, DISPLAY_PROPERTIES.FLEX);
+       setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
     });
 }
 
@@ -194,9 +194,9 @@ export function showActiveTasks() {
         const task = document.getElementById(elem.taskId);
 
         if (elem.isChecked) {
-            Task(task, DISPLAY_PROPERTIES.NONE);
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.NONE);
         } else {
-            Task(task, DISPLAY_PROPERTIES.FLEX);
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
         }
     });
 }
@@ -206,9 +206,9 @@ export function showCompletedTasks() {
         const task = document.getElementById(elem.taskId);
 
         if (elem.isChecked) {
-            Task(task, DISPLAY_PROPERTIES.FLEX);
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.FLEX);
         } else {
-            Task(task, DISPLAY_PROPERTIES.NONE);
+            setTaskDispayProperty(task, DISPLAY_PROPERTIES.NONE);
         }
     });
 }
