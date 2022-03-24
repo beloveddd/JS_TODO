@@ -11,7 +11,7 @@ export const CLASS_FOR_MODAL = 'modal-overlay';
 export const BTN_CLASSES = {
     CHECKBOX: 'checkbox',
     CROSSROW: 'crossrow',
-    CHANGE: 'fa-solid fa-pencil change',
+    CHANGE: 'change',
     PLUS: 'btnPlus',
 }
 export const BTN_PLUS = document.querySelector(`#${BTN_CLASSES.PLUS}`);

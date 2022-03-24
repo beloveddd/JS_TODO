@@ -39,16 +39,17 @@ export function defineTarget(e) {
     const ev = e.target;
     const targetClass = ev.className;
 
-    switch (targetClass) {
-        case BTN_CLASSES.CHECKBOX:
+    switch (true) {
+        case targetClass.includes(BTN_CLASSES.CHECKBOX):
             checkCheckbox(ev);
             break;
-        case BTN_CLASSES.CROSSROW:
+        case targetClass.includes(BTN_CLASSES.CROSSROW):
             const liTask = ev.parentNode.parentNode;
+            const taskId = liTask.firstElementChild.id;
 
-            Task.deleteTask(liTask);
+            Task.deleteTask(liTask, taskId);
             break;
-        case BTN_CLASSES.CHANGE:
+        case targetClass.includes(BTN_CLASSES.CHANGE):
             const taskLi = ev.parentNode.parentNode;
 
             MODAL_EDITOR.chosenTask = taskLi;

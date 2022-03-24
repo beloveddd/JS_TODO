@@ -37,6 +37,7 @@ export class Modal {
             </footer>
         </div>
         `;
+
         this.initHandlers();
     }
 
@@ -90,14 +91,22 @@ export class Modal {
     }
 
     checkDataValidity() {
-        if (!inputModal.value) {
+        const valInp = inputModal.value;
+        const valDateCreation = creationDateModal.value;
+        const valDateExpiration = expirationDateModal.value;
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const dateCreation = new Date(valDateCreation);
+        const dateExpiration = new Date(valDateExpiration);
+        const modalClass = CONTAINER_MODAL.firstElementChild.className;
+
+        if (!valInp) {
             markAsInvalid(inputModal);
-        } else if (!creationDateModal.value || new Date(creationDateModal.value) < new Date().setHours(0, 0, 0, 0) ) {
+        } else if (!valDateCreation || dateCreation < currentDate ) {
             markAsInvalid(creationDateModal);
-        } else if (!expirationDateModal.value || new Date(expirationDateModal.value) < new Date(creationDateModal.value)) {
+        } else if (!valDateExpiration || dateExpiration < dateCreation) {
             markAsInvalid(expirationDateModal);
         } else {
-            CONTAINER_MODAL.children[0].className === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
+            modalClass === MODAL_EDITOR_CLASS ? MODAL_EDITOR.saveValuesFromModalEditor() : MODAL.saveValuesFromModal();
         }
     }
 }

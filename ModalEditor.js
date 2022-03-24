@@ -35,6 +35,7 @@ export class ModalEditor extends Modal {
             </footer>
         </div>
         `;
+        
         super.initHandlers();
     }
 
