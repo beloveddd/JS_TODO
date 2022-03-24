@@ -51,12 +51,12 @@ export class ModalEditor extends Modal {
     }
 
     saveValuesFromModalEditor() {
-        const rightTask = Object.values(TASKS_OBJ).filter( (elem) => elem.taskId === +MODAL_EDITOR.chosenTask.firstElementChild.id )[0]; 
+        const targetTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +MODAL_EDITOR.chosenTask.firstElementChild.id ); 
         
-        rightTask.taskName = inputModal.value;
-        rightTask.dateCreation = getDateCreation( new Date (creationDateModal.value) );
-        rightTask.dateExpiration = getDateCreation( new Date (expirationDateModal.value) );
-        renderEdittedTask(rightTask);
+        targetTask.taskName = inputModal.value;
+        targetTask.dateCreation = getDateCreation( new Date(creationDateModal.value) );
+        targetTask.dateExpiration = getDateCreation( new Date(expirationDateModal.value) );
+        renderEdittedTask(targetTask);
         MODAL_EDITOR.closeModalEditorWindow();
     }
 }

@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -114,7 +114,7 @@ export function checkCheckbox(ev) {
 
 export function setTaskAsDone(divTask, taskId) {
     const markDone = document.createElement('div');
-    const clickedTask = Object.values(TASKS_OBJ).filter( (elem) => elem.taskId === +taskId)[0];
+    const clickedTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +taskId);
 
     markDone.id = DONE_TASK_ID_CLASS;
     markDone.innerHTML = DONE_TASK_ID_CLASS.toUpperCase();
@@ -124,8 +124,8 @@ export function setTaskAsDone(divTask, taskId) {
 }
 
 export function cancelTaskAsDone(divTask, taskId) {
-    const markDone = divTask.parentNode.querySelector('#done');
-    const clickedTask = Object.values(TASKS_OBJ).filter( (elem) => elem.taskId === +taskId)[0];
+    const markDone = divTask.parentNode.querySelector(`#${DONE_TASK_ID_CLASS}`);
+    const clickedTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +taskId);
 
     markDone.remove();
     divTask.classList.remove(DONE_TASK_ID_CLASS);
@@ -185,7 +185,7 @@ export function showAllTasks() {
     Object.values(TASKS_OBJ).forEach( (elem) => {
        const task = document.getElementById(elem.taskId);
 
-       task.parentNode.style.display = 'flex';
+       Task(task, DISPLAY_PROPERTIES.FLEX);
     });
 }
 
@@ -194,9 +194,9 @@ export function showActiveTasks() {
         const task = document.getElementById(elem.taskId);
 
         if (elem.isChecked) {
-            task.parentNode.style.display = 'none';    
+            Task(task, DISPLAY_PROPERTIES.NONE);
         } else {
-            task.parentNode.style.display = 'flex';
+            Task(task, DISPLAY_PROPERTIES.FLEX);
         }
     });
 }
@@ -206,9 +206,9 @@ export function showCompletedTasks() {
         const task = document.getElementById(elem.taskId);
 
         if (elem.isChecked) {
-            task.parentNode.style.display = 'flex';    
+            Task(task, DISPLAY_PROPERTIES.FLEX);
         } else {
-            task.parentNode.style.display = 'none';
+            Task(task, DISPLAY_PROPERTIES.NONE);
         }
     });
 }
@@ -221,4 +221,8 @@ export function clearCompletedTasks() {
             Task.deleteTask(task.parentNode, elem.taskId);
         }
     });
+}
+
+export function setTaskDispayProperty(task, property) {
+    task.parentNode.style.display = property;    
 }

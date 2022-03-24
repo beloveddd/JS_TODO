@@ -27,3 +27,7 @@ export const MODAL_EDITOR_CLASS = 'editor';
 export const INVALID_DATA_CLASS = 'canceled';
 export const DONE_TASK_ID_CLASS = 'done';
 export const CLASS_FOR_MODAL = 'modal-overlay';
+export const DISPLAY_PROPERTIES = {
+    FLEX: 'flex' ,
+    NONE: 'none'
+}
