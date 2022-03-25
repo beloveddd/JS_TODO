@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES, SORT_BLOCK, CLASS_FOR_SORT_BLOCK, CHECKBOX_STATUS } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -12,6 +12,7 @@ export function addTaskToList(e) {
     const task = new Task ({
         isChecked: false,
         taskId: taskId,
+        creationMs: taskId,
         taskName: ev.value,
         dateCreation: getDateCreation(date),
         dateExpiration: getDateExpiration(date),
@@ -102,7 +103,7 @@ export function parseDataFromTask(objOfDataTask) {
 }
 
 export function checkCheckbox(ev) {
-    const divTask = ev.parentNode.parentNode.children[0].children[0];
+    const divTask = ev.parentNode.parentNode.firstElementChild.firstElementChild;
     const taskId = ev.parentNode.parentNode.firstElementChild.id;
 
     if (ev.checked) {
@@ -113,14 +114,22 @@ export function checkCheckbox(ev) {
 }
 
 export function setTaskAsDone(divTask, taskId) {
+    const taskContainer = divTask.parentNode.firstElementChild.className;
+
+    if (taskContainer === DONE_TASK_ID_CLASS) {
+        return;
+    }
+
     const markDone = document.createElement('div');
     const clickedTask = Object.values(TASKS_OBJ).find( (elem) => elem.taskId === +taskId);
-
+    const checkbox = divTask.parentNode.parentNode.lastElementChild.firstElementChild;
+    
     markDone.id = DONE_TASK_ID_CLASS;
     markDone.innerHTML = DONE_TASK_ID_CLASS.toUpperCase();
     divTask.classList.add(DONE_TASK_ID_CLASS);
     divTask.parentNode.append(markDone);
     clickedTask.isChecked = true;
+    checkbox.checked = CHECKBOX_STATUS;
 }
 
 export function cancelTaskAsDone(divTask, taskId) {
@@ -172,8 +181,9 @@ export function markAsValid(input) {
 
 export function renderTask(task) {
     const newLi = document.createElement('li');
-
+    
     newLi.innerHTML = task.getData();
+    newLi.firstElementChild.id = task.taskId;
     LIST_OF_TASKS.append(newLi);
 }
 
@@ -226,3 +236,24 @@ export function clearCompletedTasks() {
 export function setTaskDispayProperty(task, property) {
     task.parentNode.style.display = property;    
 }
+
+export function showSortWindow() {
+    SORT_BLOCK.classList.toggle(CLASS_FOR_SORT_BLOCK);
+}
+
+export function sortByProperty(property) {
+    const TasksArr = [Object.values(TASKS_OBJ)][0];
+
+    TasksArr.sort((a, b) => a[property] > b[property] ? 1 : -1);
+    Array.from(LIST_OF_TASKS.children).forEach( (elem) => elem.remove() );
+    TasksArr.forEach( (elem) => {
+        renderTask(elem);
+
+        const divTask = Array.from(LIST_OF_TASKS.children).find( (element) => +element.firstElementChild.id === elem.taskId ).firstElementChild.firstElementChild;
+
+        if (elem.isChecked) {
+            setTaskAsDone(divTask, elem.taskId);
+        }
+    });
+}
+
