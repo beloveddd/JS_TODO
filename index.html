@@ -14,17 +14,29 @@
 <body>
     <div class="container">
         <h1>TODO list</h1>
+
         <div class="btnsForTasks">
             <button class="all">All</button>
             <button class="active">Active</button>
             <button class="completed">Completed</button>
             <button class="clear_completed">Clear Completed</button>
         </div>
+
         <ul></ul>
-        <label for="addedTask">Add your task below</label>
+
+        <label id="labelInput" for="addedTask">Add your task below</label>
         <div id="containerOfInput">
+            <i class="fa-solid fa-arrow-down-up-across-line sort"></i>
             <input type="text" id="addedTask" placeholder="Your task">
             <button class="btnPlus">+</button>
+        </div>
+
+        <div class="sortBlock">
+            <h4>Filter your tasks by:</h3>
+            <div class="btnsForSort">
+                <button class="nameSort">Name</button>
+                <button class="dateSort">Date</button>
+            </div>
         </div>
     </div>
 

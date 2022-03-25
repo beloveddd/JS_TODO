@@ -52,6 +52,10 @@ ul li div:first-child div#done {
     padding: 0 10px;
 }
 
+#labelInput {
+    margin-left: 34px;
+}
+
 .done {
     text-decoration: line-through;
     color: rgba(0, 0, 0, 0.5);
@@ -124,7 +128,8 @@ footer {
 
 #btnAdd,
 #btnCancel,
-.btnsForTasks button {
+.btnsForTasks button,
+.btnsForSort button {
     border-radius: 5px;
     font-size: 16px;
     font-weight: 500;
@@ -150,13 +155,19 @@ footer {
     cursor: pointer;
 }
 
-.fa-solid {
+.fa-solid.change {
     position: relative;
     top: -32px; 
     left: -4%;
     transform: scale(0.7);
     cursor: pointer;
     background-color: transparent;
+}
+
+.fa-solid.sort {
+    cursor: pointer;
+    background-color: transparent;
+    margin: 5px;
 }
 
 .taskBtns {
@@ -172,6 +183,30 @@ footer {
 .btnsForTasks button {
     font-size: 14px;
     background-color: white;
+}
+
+.sortBlock {
+    margin: 10px;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sortBlock h4 {
+    margin: 0;
+}
+
+.btnsForSort {
+    margin: 5px;
+}
+
+.btnsForSort button {
+    background-color: white;
+    font-size: 13px;
+}
+
+.hidden {
+    display: flex;
 }
 
 

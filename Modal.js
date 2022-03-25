@@ -71,8 +71,11 @@ export class Modal {
 
     saveValuesFromModal() {
         const taskId = Date.now();
+        const creationMs = new Date(MODAL.valCreation).getTime();
         const task = new Task ({
+            isChecked: false,
             taskId: taskId,
+            creationMs: creationMs,
             taskName: MODAL.valfromInput,
             dateCreation: getDateCreation( new Date(MODAL.valCreation) ),
             dateExpiration: getDateCreation( new Date(MODAL.valExpiration) ),
