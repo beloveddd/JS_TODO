@@ -82,7 +82,6 @@ export class Modal {
         });
 
         TASKS_OBJ[taskId] = task;
-        console.log(TASKS_OBJ);
         renderTask(task);
         MODAL.closeModalWindow();
         MODAL.clearValuesFromModal();

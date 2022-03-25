@@ -242,11 +242,11 @@ export function showSortWindow() {
 }
 
 export function sortByProperty(property) {
-    const TasksArr = [Object.values(TASKS_OBJ)][0];
+    const tasksArr = Object.values(TASKS_OBJ); 
 
-    TasksArr.sort((a, b) => a[property] > b[property] ? 1 : -1);
+    tasksArr.sort((a, b) => a[property] > b[property] ? 1 : -1);
     Array.from(LIST_OF_TASKS.children).forEach( (elem) => elem.remove() );
-    TasksArr.forEach( (elem) => {
+    tasksArr.forEach( (elem) => {
         renderTask(elem);
 
         const divTask = Array.from(LIST_OF_TASKS.children).find( (element) => +element.firstElementChild.id === elem.taskId ).firstElementChild.firstElementChild;
