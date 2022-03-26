@@ -1,4 +1,4 @@
-import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES, SORT_BLOCK, CLASS_FOR_SORT_BLOCK, CHECKBOX_STATUS } from "./const.js";
+import { LIST_OF_TASKS, ENTER_KEY_CODE, MODAL, BTN_CLASSES, MODAL_EDITOR, INVALID_DATA_CLASS, DONE_TASK_ID_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES, SORT_BLOCK, CLASS_FOR_SORT_BLOCK, CHECKBOX_STATUS, FILTER_INPUT } from "./const.js";
 import { Task } from "./Task.js";
 
 export function addTaskToList(e) {
@@ -32,7 +32,6 @@ export function getDateCreation(date) {
     }
         
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-
 }
 
 export function getDateExpiration(date) {
@@ -256,4 +255,33 @@ export function sortByProperty(property) {
         }
     });
 }
+
+export function filterTasks() {
+    const valueFromFilterInp = getValueFromFilterInput();
+    const tasksArr = Object.values(TASKS_OBJ); 
+    const valName = tasksArr.find( (elem) => elem.taskName === valueFromFilterInp );
+    const valDate = tasksArr.find( (elem) => elem.dateCreation === valueFromFilterInp );
+
+    FILTER_INPUT.value ? markAsValid(FILTER_INPUT) : markAsInvalid(FILTER_INPUT);
+    Array.from(LIST_OF_TASKS.children).forEach( (elem) => {
+        const childContainerTask = elem.firstElementChild;
+        const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(' ')[1];
+        const dateCr = elem.firstElementChild.firstElementChild.children[1].outerText.split(' ')[2];
+
+        if (valName  && (valName .taskName === inpName)){
+            return setTaskDispayProperty(childContainerTask, DISPLAY_PROPERTIES.FLEX);
+        } 
+        
+        if (valDate && (valDate.dateCreation === dateCr)) {
+            return setTaskDispayProperty(childContainerTask, DISPLAY_PROPERTIES.FLEX);
+        }
+
+        return setTaskDispayProperty(childContainerTask, DISPLAY_PROPERTIES.NONE);
+    });
+}
+
+export function getValueFromFilterInput() {
+    return FILTER_INPUT.value;
+}
+
 
