@@ -32,7 +32,6 @@ export function getDateCreation(date) {
     }
         
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-
 }
 
 export function getDateExpiration(date) {
@@ -263,6 +262,7 @@ export function filterTasks() {
     const valName = tasksArr.find( (elem) => elem.taskName === valueFromFilterInp );
     const valDate = tasksArr.find( (elem) => elem.dateCreation === valueFromFilterInp );
 
+    FILTER_INPUT.value ? markAsValid(FILTER_INPUT) : markAsInvalid(FILTER_INPUT);
     Array.from(LIST_OF_TASKS.children).forEach( (elem) => {
         const childContainerTask = elem.firstElementChild;
         const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(' ')[1];
@@ -278,7 +278,6 @@ export function filterTasks() {
 
         return setTaskDispayProperty(childContainerTask, DISPLAY_PROPERTIES.NONE);
     });
-
 }
 
 export function getValueFromFilterInput() {
