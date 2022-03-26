@@ -237,6 +237,7 @@ export function setTaskDispayProperty(task, property) {
 }
 
 export function showSortWindow() {
+    FILTER_INPUT.value = '';
     SORT_BLOCK.classList.toggle(CLASS_FOR_SORT_BLOCK);
 }
 
