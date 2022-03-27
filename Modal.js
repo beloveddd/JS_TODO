@@ -1,4 +1,4 @@
-import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS, TASKS_OBJ } from "./const.js";
+import { CONTAINER_MODAL, MODAL, CLASS_FOR_MODAL, MODAL_EDITOR, MODAL_EDITOR_CLASS, TASKS_OBJ, DISPLAY_PROPERTIES } from "./const.js";
 import { getDateCreation, getValueFromInput, getValueForCreation, getValueForExpiration, markAsInvalid, renderTask } from "./functions.js";
 import { Task } from "./Task.js";
 
@@ -59,13 +59,13 @@ export class Modal {
 
     openModalWindow() {
         MODAL.renderModalView();
-        CONTAINER_MODAL.style.display = 'block';
+        CONTAINER_MODAL.style.display = DISPLAY_PROPERTIES.BLOCK;
         CONTAINER_MODAL.classList = CLASS_FOR_MODAL;
     }
     
     closeModalWindow() {
         MODAL.clearValuesFromModal();
-        CONTAINER_MODAL.style.display = 'none';
+        CONTAINER_MODAL.style.display = DISPLAY_PROPERTIES.NONE;
         CONTAINER_MODAL.classList.delete = CLASS_FOR_MODAL;
     }
 
