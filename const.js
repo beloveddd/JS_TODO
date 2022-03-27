@@ -41,7 +41,8 @@ export const CLASS_FOR_MODAL = 'modal-overlay';
 export const CLASS_FOR_SORT_BLOCK = 'hidden';
 export const DISPLAY_PROPERTIES = {
     FLEX: 'flex' ,
-    NONE: 'none'
+    NONE: 'none',
+    BLOCK: 'block'
 }
 export const TASK_PROPERTIES = {
     CREATION_MS: 'creationMs',

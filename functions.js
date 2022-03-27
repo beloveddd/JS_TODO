@@ -82,7 +82,7 @@ export function changeTaskData(taskLi) {
 };
 
 export function parseDataFromTask(objOfDataTask) {
-    const valueTaskName = objOfDataTask.taskName.split(' ')[1];
+    const valueTaskName = objOfDataTask.taskName.split(':')[1].slice(1);
     const valueCreationDate = objOfDataTask.dateCreation.split(' ')[2].split('.');
     const valueExpirationDate = objOfDataTask.dateExpiration.split(' ')[2].split('.');
 
@@ -265,10 +265,10 @@ export function filterTasks(valueFromFilterInp) {
 
     Array.from(LIST_OF_TASKS.children).forEach( (elem) => {
         const childContainerTask = elem.firstElementChild;
-        const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(' ')[1];
+        const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(':')[1].slice(1);
         const dateCr = elem.firstElementChild.firstElementChild.children[1].outerText.split(' ')[2];
 
-        if (valName  && (valName .taskName === inpName)){
+        if (valName  && (valName.taskName === inpName)){
             return setTaskDispayProperty(childContainerTask, DISPLAY_PROPERTIES.FLEX);
         } 
         

@@ -1,4 +1,4 @@
-import { MODAL_EDITOR, CONTAINER_MODAL,CLASS_FOR_MODAL, TASKS_OBJ } from './const.js';
+import { MODAL_EDITOR, CONTAINER_MODAL,CLASS_FOR_MODAL, TASKS_OBJ, DISPLAY_PROPERTIES } from './const.js';
 import { getDateCreation, renderEdittedTask } from "./functions.js";
 import { Modal } from './Modal.js';
 
@@ -41,7 +41,7 @@ export class ModalEditor extends Modal {
 
     openModalEditorWindow(objOfValues) {
         this.renderModalEditor(objOfValues);
-        CONTAINER_MODAL.style.display = 'block';
+        CONTAINER_MODAL.style.display = DISPLAY_PROPERTIES.BLOCK;
         CONTAINER_MODAL.classList = CLASS_FOR_MODAL;
     }
     
