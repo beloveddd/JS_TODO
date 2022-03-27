@@ -82,7 +82,7 @@ export function changeTaskData(taskLi) {
 };
 
 export function parseDataFromTask(objOfDataTask) {
-    const valueTaskName = objOfDataTask.taskName.split(' ')[1];
+    const valueTaskName = objOfDataTask.taskName.split(':')[1].slice(1);
     const valueCreationDate = objOfDataTask.dateCreation.split(' ')[2].split('.');
     const valueExpirationDate = objOfDataTask.dateExpiration.split(' ')[2].split('.');
 
