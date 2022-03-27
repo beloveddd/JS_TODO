@@ -265,7 +265,7 @@ export function filterTasks(valueFromFilterInp) {
 
     Array.from(LIST_OF_TASKS.children).forEach( (elem) => {
         const childContainerTask = elem.firstElementChild;
-        const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(' ')[1];
+        const inpName = elem.firstElementChild.firstElementChild.firstElementChild.outerText.split(':')[1].slice(1);
         const dateCr = elem.firstElementChild.firstElementChild.children[1].outerText.split(' ')[2];
 
         if (valName  && (valName .taskName === inpName)){
